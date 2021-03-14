@@ -18,12 +18,13 @@ app.get('/addUser', (req,res) => {
 
   const user = {
     id: userID,
-    userName:  req.query.name
+    userName:  req.query.name,
+    message: req.query.message
   };
 
   publisher.publish("user-added", JSON.stringify(user));
 
-  res.send(`Event published using Redis ${user.name} and id ${userID} `);
+  res.send(`Event published using Redis ${user.userName} and id ${userID} `);
 
 });
 
