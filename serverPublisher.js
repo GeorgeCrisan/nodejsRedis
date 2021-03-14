@@ -2,13 +2,13 @@ const express = require('express');
 const redis = require('redis');
 const { v4: uuidv4 } = require('uuid');
 
+//Instance of express and redis client
 const publisher = redis.createClient();
-
 const app = express();
 
-app.get('/addUser', (req,res) => {
 
-  console.log('request parameters', req.query);
+//Route
+app.get('/addUser', (req,res) => {
 
   if (!req.query.name) {
     res.send(`No name received`);
@@ -23,7 +23,6 @@ app.get('/addUser', (req,res) => {
   };
 
   publisher.publish("user-added", JSON.stringify(user));
-
   res.send(`Event published using Redis ${user.userName} and id ${userID} `);
 
 });
